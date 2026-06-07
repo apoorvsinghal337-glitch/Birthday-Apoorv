@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Birthday Wish Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="setup-form" class="card form-card">
+        <h2>✨ Ultimate Wish Generator ✨</h2>
+        
+        <div class="input-group">
+            <label>1. Upload Photo:</label>
+            <input type="file" id="user-image" accept="image/*">
+        </div>
+
+        <div class="input-group">
+            <label>2. Birthday Message:</label>
+            <textarea id="user-text" placeholder="Happy Birthday! Have a blast..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>3. Secret Passcode (Optional - leave blank if not needed):</label>
+            <input type="text" id="user-pass" placeholder="e.g., Apoorv123">
+        </div>
+
+        <div class="input-group">
+            <label>4. Select Music:</label>
+            <select id="user-music">
+                <option value="https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/theme.mp3">Instrumental Tune</option>
+                <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">Party Music</option>
+                <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">Soft Melody</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>5. Choose Animation:</label>
+            <select id="user-animation">
+                <option value="balloons">🎈 Floating Balloons</option>
+                <option value="confetti">🎉 Party Confetti</option>
+                <option value="stars">⭐ Shining Stars</option>
+                <option value="hearts">❤️ Romantic Hearts</option>
+                <option value="flowers">🌸 Spring Flowers</option>
+                <option value="butterflies">🦋 Magical Butterflies</option>
+                <option value="cupcakes">🧁 Sweet Cupcakes</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>6. Draw a Signature/Heart below:</label>
+            <canvas id="sig-canvas" width="300" height="100"></canvas>
+            <button type="button" id="clear-sig-btn" style="background:#6c757d; padding:5px; font-size:0.8rem; margin-top:5px;">Clear Drawing</button>
+        </div>
+
+        <button id="generate-btn">Create Magic Link ✨</button>
+    </div>
+
+    <div id="lock-screen" class="card hidden">
+        <h2>🔒 Protected Surprise</h2>
+        <p style="margin-bottom:15px; color:#666;">Enter the secret passcode to unlock your birthday card!</p>
+        <input type="text" id="unlock-input" placeholder="Enter Passcode..." style="width:100%; padding:10px; margin-bottom:15px; border-radius:10px; border:2px solid #ddd;">
+        <button id="unlock-btn">Unlock Card 🔓</button>
+    </div>
+
+    <div id="birthday-card" class="card hidden">
+        <img id="display-pic" src="" alt="Birthday Pic" class="profile-pic">
+        <h1 class="title">Happy Birthday!</h1>
+        <p id="display-msg" class="message"></p>
+        
+        <img id="display-sig" src="" alt="Signature" style="max-width:150px; margin-bottom:15px; display:none; border-bottom: 2px dashed #ff477e;">
+        
+        <button id="wishBtn">Click for Surprise! ❤️</button>
+    </div>
+
+    <div id="animation-container"></div>
+    <audio id="birthdayMusic" loop></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
