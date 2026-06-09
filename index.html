@@ -1,1 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise For Apoorv! ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=400;600;800&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; user-select: none; }
+        body { background-color: #0a0a16; color: white; overflow: hidden; text-align: center; height: 100vh; width: 100vw; }
+        
+        .screen { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; padding: 20px; transition: opacity 0.5s ease; opacity: 0; }
+        .active { display: flex; opacity: 1; z-index: 10; }
+
+        button { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 14px 32px; font-size: 18px; border-radius: 30px; cursor: pointer; margin-top: 20px; box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4); transition: 0.3s; font-weight: 600; }
+        button:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6); }
+
+        /* PHASE 1: SCANNER */
+        .scan-container { position: relative; width: 200px; height: 200px; border: 4px dashed #00ffd2; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 30px 0; cursor: pointer; box-shadow: 0 0 20px rgba(0, 255, 210, 0.2); }
+        .scan-line { position: absolute; width: 100%; height: 4px; background: #00ffd2; box-shadow: 0 0 15px #00ffd2; top: 0; animation: scan 2s linear infinite; display: none; }
+        @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
+        .thumb-icon { font-size: 70px; transition: transform 0.3s; }
+
+        /* PHASE 2: SCRATCH CARD & CAKE CUTTING */
+        .scratch-box { position: relative; width: 280px; height: 280px; border-radius: 15px; overflow: hidden; background: transparent; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .scratch-canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer; }
+        .cake-underneath { width: 100%; height: 100%; background: #151528; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: auto; cursor: pointer; }
+        .cake { font-size: 80px; position: relative; display: inline-block; pointer-events: none; }
+        .candle { font-size: 30px; position: absolute; top: -25px; left: 32px; animation: flicker 0.3s infinite alternate; }
+        @keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+        /* PHASE 3: KBC QUIZ */
+        .kbc-box { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 450px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        .kbc-box h2 { font-size: 22px; margin-bottom: 10px; color: #ffd700; }
+        .kbc-box h3 { font-size: 18px; margin-bottom: 25px; font-weight: 400; }
+        .kbc-options { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .kbc-opt { background: linear-gradient(90deg, #1e1e38, #2a2a4e); color: #fff; border: 2px solid #3b3b6d; padding: 15px; border-radius: 10px; text-align: left; font-size: 16px; cursor: pointer; transition: 0.2s; position: relative; padding-left: 40px; }
+        .kbc-opt::before { content: '◆'; position: absolute; left: 15px; color: #ffd700; }
+        .kbc-opt:hover { border-color: #ffd700; background: rgba(255, 215, 0, 0.1); }
+        .kbc-correct { background: linear-gradient(90deg, #11998e, #38ef7d) !important; border-color: #38ef7d !important; animation: blink 0.3s 3; }
+        .kbc-wrong { background: linear-gradient(90deg, #cb2d3e, #ef473a) !important; border-color: #ef473a !important; }
+
+        /* PHASE 4: THE GRAND FINALE */
+        #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: auto; }
+        .finale-scroll-container { z-index: 2; width: 100%; height: 100vh; overflow-y: auto; padding: 40px 20px 20px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        
+        .wish-text { font-size: 2.3rem; font-weight: 800; text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; animation: glow 1.5s ease-in-out infinite alternate; color: #fff; margin-top: 35px; margin-bottom: 15px; letter-spacing: 1px; line-height: 1.3; }
+        @keyframes glow { from { text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; } to { text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff; } }
+        
+        .unique-balloons-zone { display: flex; justify-content: center; gap: 35px; margin-bottom: 25px; }
+        .premium-balloon { font-size: 52px; display: inline-block; position: relative; animation: attractiveFloat 2.8s ease-in-out infinite alternate; filter: drop-shadow(0 0 20px currentColor); }
+        .ub1 { color: #00ffd2; animation-delay: 0s; }
+        .ub2 { color: #ff007f; animation-delay: 0.4s; transform: rotate(8deg); }
+        .ub3 { color: #ffd700; animation-delay: 0.8s; transform: rotate(-8deg); }
+        
+        @keyframes attractiveFloat {
+            0% { transform: translateY(0) rotate(0deg) scale(1); filter: drop-shadow(0 0 10px currentColor); }
+            50% { transform: translateY(-15px) rotate(5deg) scale(1.08); }
+            100% { transform: translateY(-30px) rotate(-5deg) scale(1.02); filter: drop-shadow(0 0 25px currentColor); }
+        }
+
+        .personal-msg { font-size: 15px; line-height: 1.6; color: #e0e0ff; background: rgba(255, 255, 255, 0.06); padding: 18px; border-radius: 15px; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); max-width: 440px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        
+        .shinchan-wrapper { width: 130px; height: 130px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; }
+        .character-gif { width: 100%; height: 100%; object-fit: contain; animation: bounceAnim 1s infinite alternate; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
+        @keyframes bounceAnim { 0% { transform: translateY(0); } 100% { transform: translateY(-12px); } }
+        
+        .creator-tag { font-size: 16px; font-weight: 800; color: #ffd700; letter-spacing: 2px; margin-top: 15px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); width: 100%; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <audio id="cakeSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
+    <audio id="kbcSound" src="https://www.image2url.com/r2/default/audio/1781003568535-761946a9-9a3b-4ffb-8fb7-8622b27e4257.mp3" preload="auto"></audio>
+    <audio id="shinchanAudio" src="https://www.image2url.com/r2/default/audio/1780973059317-61e359a0-30be-453a-bcfa-dd20f1d1d838.mp3" preload="auto" loop></audio>
+
+    <div id="screen1" class="screen active">
+        <h1 style="color: #00ffd2; font-size: 28px;">🔒 Identity Verification Required</h1>
+        <p style="color: #aaa; margin-top: 10px;">This top-secret link is only for the most awesome person born today!</p>
+        <div class="scan-container" onmousedown="startScan()" onmouseup="stopScan()" ontouchstart="startScan(event)" ontouchend="stopScan(event)">
+            <div id="scanLine" class="scan-line"></div>
+            <div id="thumb" class="thumb-icon">👆</div>
+        </div>
+        <p id="scanStatus" style="font-weight: 600; color: #00ffd2;">Press & Hold to Scan Identity</p>
+    </div>
+
+    <div id="screen2" class="screen">
+        <h2 style="margin-bottom: 10px; color: #ff6b81;">🎁 You Won a Reward!</h2>
+        <p style="color: #ccc; margin-bottom: 25px;">Scratch the card below with your finger/mouse to reveal it!</p>
+        <div class="scratch-box">
+            <div class="cake-underneath" onclick="blowCandle()">
+                <div class="cake" id="mainCake">
+                    <span id="candle" class="candle">🕯️</span>🎂
+                </div>
+                <p id="cakeText" style="margin-top: 15px; font-weight: bold; color: #ff4757; font-size: 15px; padding: 0 10px;">Tap anywhere on the box to blow & cut! 🥳</p>
+                <button id="nextBtn2" style="display: none; padding: 8px 20px; font-size: 15px; pointer-events: auto;" onclick="event.stopPropagation(); nextScreen(3)">Next Step 👉</button>
+            </div>
+            <canvas id="scratchCanvas" class="scratch-canvas" width="280" height="280"></canvas>
+        </div>
+    </div>
+
+    <div id="screen3" class="screen">
+        <div class="kbc-box">
+            <h2>Kaun Banega Birthday King 👑</h2>
+            <h3 style="color: #00ffd2; font-size: 14px; margin-bottom: 20px;">Sawaal 7 Crore Duaon Ke Liye...</h3>
+            <h3 id="question">Q: Apoorv, subeh uth kar pehla kaam kya karta hai? 🤔</h3>
+            <div class="kbc-options">
+                <div class="kbc-opt" onclick="selectOpt(this, false)">A) Walking</div>
+                <div class="kbc-opt" onclick="selectOpt(this, false)">B) Drinking water</div>
+                <div class="kbc-opt" onclick="selectOpt(this, true)">C) Hand rub</div>
+                <div class="kbc-opt" onclick="selectOpt(this, false)">D) Message check</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen4" class="screen" style="background-color: #020208; padding: 0; overflow: hidden;">
+        <canvas id="fireworksCanvas"></canvas>
+        
+        <div class="finale-scroll-container">
+            <h1 class="wish-text">HAPPY BIRTHDAY<br>APOORV! 🎉</h1>
+            
+            <div class="unique-balloons-zone">
+                <span class="premium-balloon ub1">🎈</span>
+                <span class="premium-balloon ub2">💝</span>
+                <span class="premium-balloon ub3">🎈</span>
+            </div>
+
+            <p class="personal-msg">
+                Wishing you a day filled with endless laughter, joy, and all your favorite things! 
+                May this year bring you closer to all your dreams. Keep shining like the superstar you are, Apoorv! ✨❤️
+            </p>
+            
+            <div class="shinchan-wrapper">
+                <img class="character-gif" src="https://i.getgify.com/E8e5-Xv899YAAAAM.gif" alt="Shinchan Dancing" onerror="this.src='https://media.giphy.com/media/12Of3vCC7wZGlW/giphy.gif'">
+            </div>
+            
+            <p style="font-size: 14px; color: #ff6b81; font-weight: bold; margin-bottom: 10px;">🔊 Volume up! Birthday beats are rocking!</p>
+            
+            <div class="creator-tag">Made with ❤️ by A.S</div>
+        </div>
+    </div>
+
+    <script>
+        // Pre-load trigger script
+        function initAndUnlockAudio() {
+            document.getElementById('cakeSound').load();
+            const kbc = document.getElementById('kbcSound');
+            kbc.load();
+            // Force fetch network buffer
+            fetch(kbc.src, { mode: 'no-cors' }).then(() => console.log('KBC Preloaded')).catch(() => {});
+            document.getElementById('shinchanAudio').load();
+            document.removeEventListener('click', initAndUnlockAudio);
+            document.removeEventListener('touchstart', initAndUnlockAudio);
+        }
+        document.addEventListener('click', initAndUnlockAudio);
+        document.addEventListener('touchstart', initAndUnlockAudio);
+
+        function nextScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.style.opacity = 0; });
+            const nextScr = document.getElementById('screen' + num);
+            nextScr.classList.add('active');
+            setTimeout(() => { nextScr.style.opacity = 1; }, 50);
+
+            if(num === 2) initScratchCard();
+            if(num === 4) {
+                startFireworks();
+                const bgMusic = document.getElementById('shinchanAudio');
+                bgMusic.muted = false;
+                bgMusic.play().catch(err => console.log("Engine bypass trigger activated."));
+            }
+        }
+
+        // SCANNER
+        let scanTimer;
+        function startScan(e) {
+            if(e) e.preventDefault();
+            document.getElementById('scanLine').style.display = 'block';
+            document.getElementById('thumb').style.transform = 'scale(0.9)';
+            document.getElementById('scanStatus').innerText = "Scanning... Hold on tight! ⚡";
+            scanTimer = setTimeout(() => {
+                document.getElementById('scanStatus').innerText = "Identity Verified! ✅";
+                setTimeout(() => { nextScreen(2); }, 800);
+            }, 2000);
+        }
+        function stopScan(e) {
+            if(e) e.preventDefault();
+            clearTimeout(scanTimer);
+            document.getElementById('scanLine').style.display = 'none';
+            document.getElementById('thumb').style.transform = 'scale(1)';
+            if(document.getElementById('scanStatus').innerText !== "Identity Verified! ✅") {
+                document.getElementById('scanStatus').innerText = "Scan Failed! Press & Hold Completely.";
+            }
+        }
+
+        // SCRATCH CARD
+        let scratchCount = 0;
+        function initScratchCard() {
+            const canvas = document.getElementById('scratchCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#7f8c8d';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fff';
+            ctx.font = '18px Poppins';
+            ctx.textAlign = 'center';
+            ctx.fillText('Scratch for Apoorv ✨', 140, 140);
+
+            let isDrawing = false;
+            function scratch(e) {
+                if(!isDrawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                if(!clientX || !clientY) return;
+                
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2);
+                ctx.fill();
+                
+                scratchCount++;
+                if(scratchCount > 45) { 
+                    canvas.style.display = 'none';
+                }
+            }
+            canvas.addEventListener('mousedown', () => isDrawing = true);
+            canvas.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('touchstart', () => isDrawing = true);
+            canvas.addEventListener('touchend', () => isDrawing = false);
+            canvas.addEventListener('touchmove', scratch);
+        }
+
+        let cakeCut = false;
+        function blowCandle() {
+            if(cakeCut) return;
+            const cakeSfx = document.getElementById('cakeSound');
+            cakeSfx.muted = false;
+            cakeSfx.play().catch(e => console.log("Audio kickstart required."));
+            
+            document.getElementById('candle').style.display = 'none';
+            document.getElementById('cakeText').innerText = "Wow, Cake cut ho gaya! 🍰 Kha lo Apoorv!";
+            document.getElementById('nextBtn2').style.display = 'inline-block';
+            cakeCut = true;
+        }
+
+        // KBC QUIZ WITH HARD BACKUP SYSTEM
+        let canClick = true;
+        function selectOpt(element, isCorrect) {
+            if(!canClick) return;
+            canClick = false;
+            if(isCorrect) {
+                element.classList.add('kbc-correct');
+                const kbcSfx = document.getElementById('kbcSound');
+                kbcSfx.muted = false;
+                
+                // Play and setup fallback
+                let playPromise = kbcSfx.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Network delay on sound, activating hardware synth alert.");
+                        // Hardware Audio Beep Engine Fallback if mp3 completely blocks
+                        try {
+                            let context = new (window.AudioContext || window.webkitAudioContext)();
+                            let osc = context.createOscillator();
+                            osc.type = "sine";
+                            osc.frequency.setValueAtTime(587.33, context.currentTime); // D5 note
+                            osc.connect(context.destination);
+                            osc.start();
+                            osc.stop(context.currentTime + 0.4);
+                        } catch(e) { console.log(e); }
+                    });
+                }
+                
+                setTimeout(() => { nextScreen(4); }, 3800);
+            } else {
+                element.classList.add('kbc-wrong');
+                setTimeout(() => {
+                    element.classList.remove('kbc-wrong');
+                    canClick = true;
+                }, 1500);
+            }
+        }
+
+        // FIREWORKS
+        function startFireworks() {
+            const canvas = document.getElementById('fireworksCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x; this.y = y; this.color = color;
+                    this.radius = Math.random() * 3 + 1;
+                    this.velocity = { x: (Math.random() - 0.5) * 8, y: (Math.random() - 0.5) * 8 };
+                    this.alpha = 1;
+                }
+                draw() {
+                    ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
+                }
+                update() {
+                    this.draw(); this.velocity.y += 0.04;
+                    this.x += this.velocity.x; this.y += this.velocity.y;
+                    this.alpha -= 0.015;
+                }
+            }
+
+            function createExplosion(x, y) {
+                const colors = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#00ff66'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                for (let i = 0; i < 40; i++) particles.push(new Particle(x, y, randomColor));
+            }
+
+            setInterval(() => {
+                createExplosion(Math.random() * canvas.width, Math.random() * (canvas.height * 0.6));
+            }, 800);
+
+            canvas.addEventListener('click', (e) => { createExplosion(e.clientX, e.clientY); });
+            canvas.addEventListener('touchstart', (e) => { createExplosion(e.touches[0].clientX, e.touches[0].clientY); });
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.fillStyle = 'rgba(2, 2, 8, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => { if(p.alpha > 0) p.update(); else particles.splice(i, 1); });
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
 
