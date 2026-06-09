@@ -1,1 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise For Kukki! ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght=400;600;800&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; user-select: none; }
+        body { background-color: #0a0a16; color: white; overflow: hidden; text-align: center; height: 100vh; width: 100vw; }
+        
+        .screen { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; padding: 20px; transition: opacity 0.5s ease; opacity: 0; }
+        .active { display: flex; opacity: 1; z-index: 10; }
+
+        button { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 14px 32px; font-size: 18px; border-radius: 30px; cursor: pointer; margin-top: 20px; box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4); transition: 0.3s; font-weight: 600; }
+        button:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.6); }
+
+        /* NEW PHASE 1: ROYAL CROWN UNVEIL STYLE */
+        .crown-container { position: relative; width: 220px; height: 220px; border: 3px solid rgba(255, 215, 0, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 30px 0; cursor: pointer; background: rgba(255, 215, 0, 0.03); box-shadow: 0 0 20px rgba(255, 215, 0, 0.1); transition: 0.4s; }
+        .crown-icon { font-size: 85px; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); transition: transform 0.3s, filter 0.3s; animation: crownFloat 2s ease-in-out infinite alternate; }
+        @keyframes crownFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+        
+        /* Magical Sparkle Ring */
+        .magic-ring { position: absolute; width: 100%; height: 100%; border: 3px dashed #ffd700; border-radius: 50%; top: 0; left: 0; box-shadow: 0 0 25px #ffd700; display: none; animation: spinRing 3s linear infinite; }
+        @keyframes spinRing { 0% { transform: rotate(0deg) scale(1); opacity: 0.8; } 50% { transform: rotate(180deg) scale(1.05); opacity: 1; } 100% { transform: rotate(360deg) scale(1); opacity: 0.8; } }
+
+        /* PHASE 2: SCRATCH CARD & CAKE CUTTING */
+        .scratch-box { position: relative; width: 280px; height: 280px; border-radius: 15px; overflow: hidden; background: transparent; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .scratch-canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer; }
+        .cake-underneath { width: 100%; height: 100%; background: #151528; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; pointer-events: auto; cursor: pointer; }
+        .cake { font-size: 80px; position: relative; display: inline-block; pointer-events: none; }
+        .candle { font-size: 30px; position: absolute; top: -25px; left: 32px; animation: flicker 0.3s infinite alternate; }
+        @keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+        /* PHASE 3: KBC QUIZ */
+        .kbc-box { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 20px; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 450px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        .kbc-box h2 { font-size: 22px; margin-bottom: 10px; color: #ffd700; }
+        .kbc-box h3 { font-size: 18px; margin-bottom: 25px; font-weight: 400; }
+        .kbc-options { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .kbc-opt { background: linear-gradient(90deg, #1e1e38, #2a2a4e); color: #fff; border: 2px solid #3b3b6d; padding: 15px; border-radius: 10px; text-align: left; font-size: 16px; cursor: pointer; transition: 0.2s; position: relative; padding-left: 40px; }
+        .kbc-opt::before { content: '◆'; position: absolute; left: 15px; color: #ffd700; }
+        .kbc-opt:hover { border-color: #ffd700; background: rgba(255, 215, 0, 0.1); }
+        .kbc-correct { background: linear-gradient(90deg, #11998e, #38ef7d) !important; border-color: #38ef7d !important; animation: blink 0.3s 3; }
+        .kbc-wrong { background: linear-gradient(90deg, #cb2d3e, #ef473a) !important; border-color: #ef473a !important; }
+
+        /* PHASE 4: THE GRAND FINALE (PREMIUM MODE) */
+        #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: auto; }
+        .finale-scroll-container { z-index: 2; width: 100%; height: 100vh; overflow-y: auto; padding: 40px 20px 40px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+        
+        .premium-age-badge { color: #ffd700; font-size: 16px; font-weight: 800; letter-spacing: 4px; margin-top: 25px; text-shadow: 0 0 12px rgba(255, 215, 0, 0.6); background: rgba(255, 215, 0, 0.1); padding: 4px 15px; border-radius: 20px; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .wish-text { font-size: 2.3rem; font-weight: 800; text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; animation: glow 1.5s ease-in-out infinite alternate; color: #fff; margin-top: 15px; margin-bottom: 15px; letter-spacing: 1px; line-height: 1.3; }
+        @keyframes glow { from { text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; } to { text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff; } }
+        
+        .unique-balloons-zone { display: flex; justify-content: center; gap: 35px; margin-bottom: 25px; }
+        .premium-balloon { font-size: 52px; display: inline-block; position: relative; animation: attractiveFloat 2.8s ease-in-out infinite alternate; filter: drop-shadow(0 0 20px currentColor); }
+        .ub1 { color: #00ffd2; animation-delay: 0s; }
+        .ub2 { color: #ff007f; animation-delay: 0.4s; transform: rotate(8deg); }
+        .ub3 { color: #ffd700; animation-delay: 0.8s; transform: rotate(-8deg); }
+        
+        @keyframes attractiveFloat {
+            0% { transform: translateY(0) rotate(0deg) scale(1); filter: drop-shadow(0 0 10px currentColor); }
+            50% { transform: translateY(-15px) rotate(5deg) scale(1.08); }
+            100% { transform: translateY(-30px) rotate(-5deg) scale(1.02); filter: drop-shadow(0 0 25px currentColor); }
+        }
+
+        .personal-msg { font-size: 15px; line-height: 1.6; color: #e0e0ff; background: rgba(255, 255, 255, 0.06); padding: 18px; border-radius: 15px; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); max-width: 440px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        
+        .gift-box-wrapper { position: relative; display: flex; justify-content: center; align-items: center; width: 120px; height: 120px; margin: 20px 0; animation: giftBounce 1.2s infinite alternate ease-in-out; }
+        .live-gift-emoji { font-size: 75px; filter: drop-shadow(0 0 20px #ff4757); }
+        @keyframes giftBounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-25px) scale(1.08); filter: drop-shadow(0 0 30px #ff6b81); }
+        }
+        
+        .creator-tag { font-size: 16px; font-weight: 800; color: #ffd700; letter-spacing: 2px; margin-top: 15px; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); width: 100%; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <audio id="chimeSound" src="https://actions.google.com/sounds/v1/sfx/glitch_digital_bi_tones.ogg" preload="auto"></audio>
+    <audio id="cakeSound" src="https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg" preload="auto"></audio>
+    <audio id="kbcSound" src="https://www.image2url.com/r2/default/audio/1781003568535-761946a9-9a3b-4ffb-8fb7-8622b27e4257.mp3" preload="auto"></audio>
+    <audio id="shinchanAudio" src="https://www.image2url.com/r2/default/audio/1780973059317-61e359a0-30be-453a-bcfa-dd20f1d1d838.mp3" preload="auto" loop></audio>
+
+    <div id="screen1" class="screen active">
+        <h1 style="color: #ffd700; font-size: 26px; text-shadow: 0 0 10px rgba(255,215,0,0.3);">👑 Entrance to Kukki's Kingdom</h1>
+        <p style="color: #aaa; margin-top: 10px; font-size: 14px; padding: 0 20px;">This beautiful link is strictly reserved for the Birthday Princess!</p>
+        
+        <div class="crown-container" onmousedown="startCrownUnveil()" onmouseup="stopCrownUnveil()" ontouchstart="startCrownUnveil(event)" ontouchend="stopCrownUnveil(event)">
+            <div id="magicRing" class="magic-ring"></div>
+            <div id="crown" class="crown-icon">👑</div>
+        </div>
+        
+        <p id="crownStatus" style="font-weight: 600; color: #ffd700; letter-spacing: 1px;">Press & Hold The Crown To Enter</p>
+    </div>
+
+    <div id="screen2" class="screen">
+        <h2 style="margin-bottom: 10px; color: #ff6b81;">🎁 You Won a Reward!</h2>
+        <p style="color: #ccc; margin-bottom: 25px;">Scratch the card below with your finger/mouse to reveal it!</p>
+        <div class="scratch-box">
+            <div class="cake-underneath" onclick="blowCandle()">
+                <div class="cake" id="mainCake">
+                    <span id="candle" class="candle">🕯️</span>🎂
+                </div>
+                <p id="cakeText" style="margin-top: 15px; font-weight: bold; color: #ff4757; font-size: 15px; padding: 0 10px;">Tap anywhere on the box to blow & cut! 🥳</p>
+                <button id="nextBtn2" style="display: none; padding: 8px 20px; font-size: 15px; pointer-events: auto;" onclick="event.stopPropagation(); nextScreen(3)">Next Step 👉</button>
+            </div>
+            <canvas id="scratchCanvas" class="scratch-canvas" width="280" height="280"></canvas>
+        </div>
+    </div>
+
+    <div id="screen3" class="screen">
+        <div class="kbc-box">
+            <h2>Kaun Banega Birthday Girl 👑</h2>
+            <h3 style="color: #00ffd2; font-size: 14px; margin-bottom: 20px;">Sawaal 7 Crore Duaon Ke Liye...</h3>
+            <h3 id="question">Q: Kukki, subeh uth kar pehla kaam kya karti hai? 🤔</h3>
+            <div class="kbc-options">
+                <div class="kbc-opt" onclick="selectOpt(this, false)">A) Walking</div>
+                <div class="kbc-opt" onclick="selectOpt(this, false)">B) Drinking water</div>
+                <div class="kbc-opt" onclick="selectOpt(this, true)">C) Hand rub</div>
+                <div class="kbc-opt" onclick="selectOpt(this, false)">D) Message check</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen4" class="screen" style="background-color: #020208; padding: 0; overflow: hidden;">
+        <canvas id="fireworksCanvas"></canvas>
+        
+        <div class="finale-scroll-container">
+            <div style="color: #00ffd2; font-size: 13px; font-weight: 800; letter-spacing: 4px; margin-top: 25px; text-shadow: 0 0 10px rgba(0, 255, 210, 0.7);">DATE: 26 • 06 • 2026</div>
+            <div class="premium-age-badge">✨ OFFICIAL 18 ✨</div>
+            <h1 class="wish-text">HAPPY BIRTHDAY<br><span style="color: #ffd700; text-shadow: 0 0 15px #ffd700;">KUKKI!</span> 🎉</h1>
+            
+            <div class="unique-balloons-zone">
+                <span class="premium-balloon ub1">🎈</span>
+                <span class="premium-balloon ub2">💝</span>
+                <span class="premium-balloon ub3">🎈</span>
+            </div>
+
+            <p class="personal-msg">
+                Welcome to adulthood! 🔞 Wishing you a beautiful day filled with endless laughter, joy, and all your favorite things! 
+                May this milestone 18th year bring you closer to all your dreams. Keep shining like the superstar you are, Kukki! ✨❤️
+            </p>
+            
+            <div class="gift-box-wrapper">
+                <span class="live-gift-emoji">🎁</span>
+            </div>
+            
+            <div class="creator-tag">Made with ❤️ by A.S</div>
+        </div>
+    </div>
+
+    <script>
+        function initAndUnlockAudio() {
+            document.getElementById('chimeSound').load();
+            document.getElementById('cakeSound').load();
+            document.getElementById('kbcSound').load();
+            document.getElementById('shinchanAudio').load();
+            document.removeEventListener('click', initAndUnlockAudio);
+            document.removeEventListener('touchstart', initAndUnlockAudio);
+        }
+        document.addEventListener('click', initAndUnlockAudio);
+        document.addEventListener('touchstart', initAndUnlockAudio);
+
+        function nextScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.style.opacity = 0; });
+            const nextScr = document.getElementById('screen' + num);
+            nextScr.classList.add('active');
+            setTimeout(() => { nextScr.style.opacity = 1; }, 50);
+
+            if(num === 2) initScratchCard();
+            if(num === 4) {
+                startFireworks();
+                const bgMusic = document.getElementById('shinchanAudio');
+                bgMusic.muted = false;
+                bgMusic.play().catch(err => console.log("Engine bypass trigger activated."));
+            }
+        }
+
+        // ROYAL CROWN UNVEIL ENGINE
+        let crownTimer;
+        function startCrownUnveil(e) {
+            if(e) e.preventDefault();
+            document.getElementById('magicRing').style.display = 'block';
+            document.getElementById('crown').style.filter = 'drop-shadow(0 0 25px #ffd700) scale(1.1)';
+            document.getElementById('crownStatus').innerText = "Unlocking Royal Mystery... ✨";
+            
+            const chimeSfx = document.getElementById('chimeSound');
+            chimeSfx.muted = false;
+            chimeSfx.play().catch(err => console.log("Audio kickstart"));
+
+            crownTimer = setTimeout(() => {
+                document.getElementById('crownStatus').innerText = "Access Granted, Princess! 👑✨";
+                setTimeout(() => { nextScreen(2); }, 800);
+            }, 2000);
+        }
+        function stopCrownUnveil(e) {
+            if(e) e.preventDefault();
+            clearTimeout(crownTimer);
+            document.getElementById('magicRing').style.display = 'none';
+            document.getElementById('crown').style.filter = 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.5))';
+            if(document.getElementById('crownStatus').innerText !== "Access Granted, Princess! 👑✨") {
+                document.getElementById('crownStatus').innerText = "Hold completely to unlock your crown!";
+            }
+        }
+
+        // SCRATCH CARD
+        let scratchCount = 0;
+        function initScratchCard() {
+            const canvas = document.getElementById('scratchCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#7f8c8d';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fff';
+            ctx.font = '18px Poppins';
+            ctx.textAlign = 'center';
+            ctx.fillText('Scratch for Kukki ✨', 140, 140);
+
+            let isDrawing = false;
+            function scratch(e) {
+                if(!isDrawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                if(!clientX || !clientY) return;
+                
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2);
+                ctx.fill();
+                
+                scratchCount++;
+                if(scratchCount > 45) { 
+                    canvas.style.display = 'none';
+                }
+            }
+            canvas.addEventListener('mousedown', () => isDrawing = true);
+            canvas.addEventListener('mouseup', () => isDrawing =
 
