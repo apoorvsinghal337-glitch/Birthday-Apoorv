@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Will you be mine?</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+        h1 { color: #d63384; font-size: 3rem; }
+        .buttons { margin-top: 20px; }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+        #yes { background-color: #28a745; color: white; }
+        #no { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Do you love me?</h1>
+    <div class="buttons">
+        <button id="yes" onclick="alert('Yay! I knew it! ❤️')">Yes</button>
+        <button id="no" onclick="alert('Try again, please! 🥺')">No</button>
+    </div>
+</body>
+</html>
 
